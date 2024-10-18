@@ -63,7 +63,7 @@
       </v-row>
 
       <!-- Game Server IFrame -->
-      <v-row v-if="!isMobile">
+      <v-row v-if="!isMobile && !iframeLoadError">
         <v-col cols="12">
           <div class="game-container" style="display: flex; justify-content: center; align-items: center;">
             <iframe
@@ -71,14 +71,15 @@
               frameborder="0"
               style="width: 70%; height: 600px; margin-left: 15%; margin-right: 15%;"
               allowfullscreen
-              @error="iframeLoadError = true"
+              @load="onIframeLoad"
+              @error="onIframeError"
+              ref="gameIframe"
             ></iframe>
-            <div v-if="iframeLoadError" style="color: goldenrod; text-align: center; margin-top: 20px;">
-              Dear manager, please contact John in the contact section below to see the LLM-Demo.
-            </div>
           </div>
         </v-col>
       </v-row>
+
+
 
 
 
@@ -135,7 +136,6 @@ import SiteContactEmail from '../components/SiteContactEmail.vue'; // Import Con
 import SectionHeader from '../components/./SectionHeader.vue'; // Adjust the path as necessary
 import SiteCertificate from '../components/SiteCertificate.vue'
 //import LiveOnMarsComponent from '../components/LiveOnMarsComponent.vue'; // Game Server
-
 export default defineComponent({
   name: 'HomeView',
 
@@ -143,7 +143,8 @@ export default defineComponent({
     return {
       iframeLink: 'https://one.game.johnny-alin-data.com/',
       iframeLoadError: false,
-      isMobile: false
+      isMobile: false,
+      iframeLoadTimeout: null,
     };
   },
 
@@ -159,6 +160,7 @@ export default defineComponent({
 
   mounted() {
     this.isMobile = this.checkIfMobile(); // Call the function to check if the user is on mobile
+    this.setupIframeTimeout(); // Set up a timeout to check iframe load status
   },
 
   methods: {
@@ -170,9 +172,35 @@ export default defineComponent({
     checkIfMobile() {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       return /android|ipad|playbook|silk|iphone|ipod/i.test(userAgent);
-    }
+    },
+
+    setupIframeTimeout() {
+      this.iframeLoadTimeout = setTimeout(() => {
+        if (!this.iframeLoadError) {
+          // If iframe is still trying to load after the timeout, trigger the error
+          this.iframeLoadError = true;
+        }
+      }, 15000); // Set a longer timeout, e.g., 15 seconds
+    },
+
+    onIframeLoad() {
+      // Clear the error flag and timeout if the iframe loads successfully
+      this.iframeLoadError = false;
+      if (this.iframeLoadTimeout) {
+        clearTimeout(this.iframeLoadTimeout);
+      }
+    },
+
+    onIframeError() {
+      // Set the error flag if iframe encounters an error
+      this.iframeLoadError = true;
+      if (this.iframeLoadTimeout) {
+        clearTimeout(this.iframeLoadTimeout);
+      }
+    },
   }
 });
+
 
 
 
