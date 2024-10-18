@@ -62,6 +62,23 @@
             </v-col>
       </v-row>
 
+      <!-- Game Server IFrame -->
+      <v-row v-if="!isMobile">
+        <v-col cols="12">
+          <div class="game-container" style="display: flex; justify-content: center; align-items: center;">
+            <iframe
+              :src="iframeLink"
+              frameborder="0"
+              style="width: 70%; height: 600px; margin-left: 15%; margin-right: 15%;"
+              allowfullscreen
+              @error="iframeLoadError = true"
+            ></iframe>
+            <div v-if="iframeLoadError" style="color: goldenrod; text-align: center; margin-top: 20px;">
+              Dear manager, please contact John in the contact section below to see the LLM-Demo.
+            </div>
+          </div>
+        </v-col>
+      </v-row>
 
 
 
@@ -90,7 +107,7 @@
 
       <!-- SiteContactEmail -->
       <v-row>
-            <v-col cols="12" >
+            <v-col cols="12" class="px-md-0 px-4">
           <SectionHeader header-text="Contact"/>
               <div id="contact">
                        <SiteContactEmail />
@@ -122,24 +139,41 @@ import SiteCertificate from '../components/SiteCertificate.vue'
 export default defineComponent({
   name: 'HomeView',
 
+  data() {
+    return {
+      iframeLink: 'https://one.game.johnny-alin-data.com/',
+      iframeLoadError: false,
+      isMobile: false
+    };
+  },
+
   components: {
     NavBar,
-    SiteFooter,// Register Footer component
+    SiteFooter, // Register Footer component
     SiteSkill,
     SitePortfolio,
     SiteContactEmail,
     SectionHeader,
     SiteCertificate,
-    
   },
-  methods:{
-      scroll(refName){
-        const element = document.getElementById(refName);
-        element.scrollIntoView({behavior: "smooth"});
-      }
-  }
 
+  mounted() {
+    this.isMobile = this.checkIfMobile(); // Call the function to check if the user is on mobile
+  },
+
+  methods: {
+    scroll(refName) {
+      const element = document.getElementById(refName);
+      element.scrollIntoView({ behavior: "smooth" });
+    },
+
+    checkIfMobile() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      return /android|ipad|playbook|silk|iphone|ipod/i.test(userAgent);
+    }
+  }
 });
+
 
 
 </script>
