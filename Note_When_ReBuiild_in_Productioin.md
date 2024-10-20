@@ -1,3 +1,18 @@
+## 2024-10-20 
+1. Solved the bug for fas-loading
+1.1 Prepare to dist to S3 of AWS
+2. Undone Issue 1: The tab Download and More
+3. Undone Task 1: Add all videos
+4. Undone Task 2: Add click button in Home
+
+
+![add sub-path for viemo-searices](moutain_show_case_un.png)
+
+
+
+
+
+---
 
 ## 2024-10-18 updated iframe to sub-domain
 
