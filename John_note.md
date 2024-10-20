@@ -1,4 +1,24 @@
 
+## Clan cache and check Chrome
+- To force Google Chrome on macOS to reload the latest version of a webpage and bypass the cache, you can use this keyboard shortcut:
+
+**Command (⌘) + Shift + R**
+
+This forces Chrome to reload the page while ignoring the cache entirely. If that doesn’t work, you can also try:
+
+**Command (⌘) + Option (⌥) + E**
+
+This will empty the cache and then you can refresh the page.
+
+
+-------
+
+
+## Vimdeo 
+- replace video-id
+- keep player-id the same when embded
+
+
 
 
 ## Check vue version first 
