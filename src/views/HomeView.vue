@@ -16,7 +16,8 @@
            <v-col cols="2" >
            <div style="position: absolute; color:white; z-index: 9999; bottom: 0; margin-left: auto; margin-right: auto; left: 0; right: 0; text-align: center;">    
 
-               <v-icon>fas fa-angle-double-down</v-icon>
+              <i class="fas fa-angle-double-down" style="color: white; position: absolute; z-index: 9999; bottom: 0; left: 0; right: 0; text-align: center;"></i>
+
           </div>
            </v-col>
 

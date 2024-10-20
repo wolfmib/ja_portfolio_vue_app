@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app color="black" dark flat class="px-12">
     <v-btn>
-      <v-icon color="orange" left class="mr-2">fas fa-dove</v-icon>
+      <i class="fas fa-dove" style="color: orange; margin-right: 8px;"></i>
       <span class="icon-style">JOHNNY</span>
        <span> - </span>
       <span class="icon-style">Alin</span>
