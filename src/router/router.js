@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LiveOnMarsComponent from '../components/LiveOnMarsComponent.vue'; // Adjust the import path as per your component folder
 import HOME from '../views/HomeView.vue'; // Ensure the import path matches the actual location of the Home.vue file
 import AWSGlue from '../views/AWSGlueView.vue' // Show Case
+import Alin from '../views/AlinView.vue' // Show Case
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: '/show_case/aws/aws_glue',
     name: 'AwsGlueShowcase',
     component: AWSGlue  // Use the duplicated view for AWS Glue showcase
+  },
+  {
+    path: '/alin',
+    name: 'AlinShowCase',
+    component: Alin  // Use the duplicated view for AWS Glue showcase
   }
 ];
 

@@ -1,6 +1,6 @@
 <template>
   <v-app id="home">
-    <NavBar />
+    <NavBarShowCaseAwsGlue />
     <v-container fluid>
        <div class="head">
          <v-row>
@@ -16,14 +16,16 @@
            <v-col cols="2" >
            <div style="position: absolute; color:white; z-index: 9999; bottom: 0; margin-left: auto; margin-right: auto; left: 0; right: 0; text-align: center;">    
 
-              <i class="fas fa-angle-double-down" style="color: white; position: absolute; z-index: 9999; bottom: 0; left: 0; right: 0; text-align: center;"></i>
+               <i class="fas fa-angle-double-down" style="color: white; position: absolute; z-index: 9999; bottom: 0; left: 0; right: 0; text-align: center;"></i>
 
           </div>
            </v-col>
 
           <v-col cols="5"> 
             <div style="position: relative; color:white; z-index: 9999;" class="mt-16">
-              <v-img src="gan1.jpg" alt="ig-photo1" contain max-height="300"></v-img>
+              
+               <v-img :src="require('@/assets/john.jpg')" alt="ig-photo2" contain max-height="300"></v-img>
+            
             </div>
           </v-col>
          </v-row>
@@ -34,64 +36,20 @@
         <!-- Image container on the left -->
         <v-col cols="12" md="6">
           <div class="image-container">
-             <div class="egg" >
-                      <v-img src="gan2_v1.png" alt="ig-photo2"  contain max-height="350"></v-img>
-             </div>
+            <div class="egg">
+            <!-- Correct image loading with require() -->
+            <v-img :src="require('@/assets/certificate_one.jpg')" alt="ig-photo2" contain max-height="300"></v-img>
+            </div>
           </div>
         </v-col>
         <!-- Text container on the right -->
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6" mb="6" mt="6">
           <div id="about" class="text-container">
-<h1>Guten Tag!</h1>
-<p>I am a Data Engineer with over 10 years of experience in <strong class="highlight">Python</strong>, <strong>Golang</strong>, and <strong>Bash scripting</strong>. I specialize in building complex data pipelines and scalable APIs on <strong class="highlight">AWS</strong> and GCP.</p>
-
-<p>Currently focused on <strong>AI-driven solutions</strong>, I leverage <strong>Large Language Models (LLMs)</strong> and <strong>FAISS vector stores</strong> to develop advanced AI assistants and automate data workflows.</p>
-
-<p>Skilled in scripting, database management, and scalable AI solutions, I am passionate about delivering impactful, data-driven technologies.</p>
-
- <!-- Social media icons or contact buttons can be added here -->
-</div>
-        </v-col>
-      </v-row>
-      <!-- Certificate --> 
-      <v-row>
-            <v-col cols="12" >
-              <SectionHeader header-text="Certificate"/>
-              <div id="certificates">
-                       <SiteCertificate />
-              </div>
-            </v-col>
-      </v-row>
-
-
-      <!-- ShowCase-apr-18-2025 tempalte --> 
-      <v-row>
-            <v-col cols="12" >
-              <SectionHeader header-text="Data-ShowCase:  AWS, Data, AI Automation, ETL, Analytics "/>
-             
-              <div id="ShowCaseCICD" style="margin-left: 8%; margin-right: 7%;">
-                       <ShowCaseCICD />
-              </div>
-            </v-col>
-      </v-row>
-
-
-
-
-      <!-- Game Server IFrame -->
-      <v-row v-if="!isMobile && !iframeLoadError">
-        <v-col cols="12">
-          <div class="game-container" style="display: flex; justify-content: center; align-items: center;">
-            <iframe
-              :src="iframeLink"
-              frameborder="0"
-              style="width: 70%; height: 600px; margin-left: 15%; margin-right: 15%;"
-              allowfullscreen
-              @load="onIframeLoad"
-              @error="onIframeError"
-              ref="gameIframe"
-            ></iframe>
+            <h1>醫學代碼測驗</h1>
+            <p>此頁面用於展示測驗，幫助使用者複習與記憶醫學代碼。</p>
+            <p>Gogogo!</p>
           </div>
+
         </v-col>
       </v-row>
 
@@ -100,25 +58,19 @@
 
 
 
+      
+      <!-- Add margin-top to the second row -->
+      <v-row class="mt-6"> 
+            <v-col cols="12" >
+              <SectionHeader header-text="健保代碼 記憶測驗 "/>
+              <div id="lectures-one">
+                        <!-- Replacing AWS Glue showcase with ShowCaseAlinFeb -->
+                        <ShowCaseAlinFeb />
+              </div>
+            </v-col>
+      </v-row>
 
-      <!-- Skills --> 
-      <v-row>
-            <v-col cols="12" >
-              <SectionHeader header-text="Skills"/>
-              <div id="skills">
-                       <SiteSkill />
-              </div>
-            </v-col>
-      </v-row>
-      <!-- Portfolio -->
-      <v-row>
-            <v-col cols="12" >
-              <SectionHeader header-text="Portfolio"/>
-              <div id="portfolio">
-                       <SitePortfolio />
-              </div>
-            </v-col>
-      </v-row>
+
 
 
 
@@ -144,17 +96,15 @@ import { defineComponent } from 'vue';
 
 // Components
 
-import NavBar from '../components/NavBar.vue';
+import NavBarShowCaseAwsGlue from '../components/NavBarShowCaseAwsGlue.vue';
+import ShowCaseAlinFeb from '../components/AlinFeb.vue'  // Import your component
+
 import SiteFooter from '../components/SiteFooter.vue'; // Import Footer component
-import SiteSkill from '../components/SiteSkill.vue'; // Import Skill component
-import SitePortfolio from '../components/SitePortfolio.vue'; // Import portfolio component
 import SiteContactEmail from '../components/SiteContactEmail.vue'; // Import Contact component
 import SectionHeader from '../components/./SectionHeader.vue'; // Adjust the path as necessary
-import SiteCertificate from '../components/SiteCertificate.vue'
-import ShowCaseCICD from '../components/ShowCaseCICD.vue'
 
 
-//import TestTab from '../components/TestTab.vue'
+
 //import LiveOnMarsComponent from '../components/LiveOnMarsComponent.vue'; // Game Server
 export default defineComponent({
   name: 'HomeView',
@@ -168,16 +118,14 @@ export default defineComponent({
     };
   },
 
+//
   components: {
-    NavBar,
+    NavBarShowCaseAwsGlue,
+    ShowCaseAlinFeb,
     SiteFooter, // Register Footer component
-    SiteSkill,
-    SitePortfolio,
     SiteContactEmail,
     SectionHeader,
-    SiteCertificate,
-    ShowCaseCICD,
-    //TestTab,
+    
   },
 
   mounted() {

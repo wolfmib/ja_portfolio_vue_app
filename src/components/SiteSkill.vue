@@ -29,6 +29,7 @@
 <script>
 export default {
   data() {
+    /*
     return {
       firstRowSkills: [
         { title: "Languages", details: "Python, SQL, Golang, Bash, Javascript, C ", faIcon: 'fas fa-code', icon: 'icon-languages' },
@@ -41,6 +42,51 @@ export default {
         { title: "Design", details: "FPGA Software Design / Platform Feature Design/ Web Design", faIcon: 'fas fa-paint-brush', icon: 'icon-design' }
       ]
     };
+    */
+
+    return {
+  firstRowSkills: [
+    {
+      title: "Languages",
+      details: "Python, SQL, Golang, Bash, JavaScript, C",
+      faIcon: 'fas fa-code',
+      icon: 'icon-languages'
+    },
+    {
+      title: "Databases",
+      details: "PostgreSQL, MongoDB, MySQL",
+      faIcon: 'fas fa-database',
+      icon: 'icon-databases'
+    },
+    {
+      title: "Data Engineering",
+      details: "Apache Airflow, ETL Pipelines, Superset, BI Dashboards",
+      faIcon: 'fas fa-project-diagram',
+      icon: 'icon-data-engineering'
+    }
+  ],
+  secondRowSkills: [
+    {
+      title: "Cloud & Tools",
+      details: "AWS EC2, S3, Route53, GCP, Git, Linux, VSCode Remote SSH",
+      faIcon: 'fas fa-cloud',
+      icon: 'icon-tools'
+    },
+    {
+      title: "AI & Automation",
+      details: "OpenAI API, Whisper, FastAPI, LangChain, Agents",
+      faIcon: 'fas fa-brain',
+      icon: 'icon-ai-automation'
+    },
+    {
+      title: "Web & Integration",
+      details: "Vue 3, Flask, REST APIs, Google Drive API, JSON Sync",
+      faIcon: 'fas fa-network-wired',
+      icon: 'icon-web-integration'
+    }
+  ]
+};
+
   }
 };
 </script>

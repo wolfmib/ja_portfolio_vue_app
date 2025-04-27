@@ -17,7 +17,7 @@ vue memoo
         <i class="fab fa-facebook"></i>
       </a>
     </div>
-    <span>© 2024 – JOHNNY-ALIN All Rights Reserved</span>
+    <span>© 2025   JOHNNY-ALIN All Rights Reserved</span>
   </footer>
 </template>
 
