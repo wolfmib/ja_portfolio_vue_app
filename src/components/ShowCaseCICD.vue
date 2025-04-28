@@ -121,7 +121,7 @@ onMounted(async () => {
   // log-01 : landing, someong comes
   try {
     // Log a landing event to your EC2 Flask server
-    await axios.post('http://localhost:5001/upload_log', {
+    await axios.post('/api/upload_log', {
       tag: 'landing',
       data: {
         event: 'page_visit',
@@ -139,7 +139,7 @@ onMounted(async () => {
 
   // read video
   try {
-    const res = await axios.get('http://localhost:5001/get_showcase_data')
+    const res = await axios.get('/api/get_showcase_data')
     videos.value = res.data.tab1
     moreTabContent.value = res.data.tab2
     downloadsTabContent.value = res.data.tab3
