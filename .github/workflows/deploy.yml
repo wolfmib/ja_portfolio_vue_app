@@ -35,7 +35,7 @@ jobs:
 
         echo "[STEP] Sending deploy log to Flask server"
         payload=$(cat <<EOF_JSON
-{
+        {
   "tag": "githubDeploy",
   "data": {
     "status": "success",
