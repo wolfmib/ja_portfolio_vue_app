@@ -20,7 +20,7 @@ jobs:
 
     - name: Deploy to EC2 via SSH
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@YOUR.EC2.IP.ADDRESS << 'EOF'
+        ssh -o StrictHostKeyChecking=no ec2-user@35.181.22.152 << 'EOF'
           echo "[START] Deploying Vue app to EC2"
           cd ~/my-new-vue-project
           git fetch origin
