@@ -34,21 +34,19 @@ jobs:
           npm run build
           
           echo "[STEP] Sending deploy log to Flask server"
-          curl -X POST http://127.0.0.1:5001/upload_deploy_log \
-            -H "Content-Type: application/json" \
-            -d "$(cat <<EOF_JSON
-          {
-            "tag": "githubDeploy",
-            "data": {
-              "status": "success",
-              "branch": "main",
-              "source": "GitHub Actions",
-              "message": "Vue app deployed via CI/CD pipeline",
-              "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            }
-          }
-          EOF_JSON
-          )"
+          curl -X POST http://127.0.0.1:5001/upload_deploy_log -H "Content-Type: application/json" -d "$(cat <<EOF_JSON
+{
+  "tag": "githubDeploy",
+  "data": {
+    "status": "success",
+    "branch": "main",
+    "source": "GitHub Actions",
+    "message": "Vue app deployed via CI/CD pipeline",
+    "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  }
+}
+EOF_JSON
+)"
 
           echo "[DONE] Deployment complete"
           
