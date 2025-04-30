@@ -116,4 +116,4 @@ As fron-end to show case by using threejs and aws-infra to build ai-game (llm)
 - **Add the following line to sync files every hour**
   ```
   0 * * * * /usr/bin/aws s3 sync /path/to/dist s3://johnny-alin-data.com --delete >> /var/log/s3_sync.log 2>&1
-  ```
+  ```# Trigger CI/CD again
