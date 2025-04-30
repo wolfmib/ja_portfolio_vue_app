@@ -34,9 +34,7 @@ jobs:
         npm run build
 
         echo "[STEP] Sending deploy log to Flask server"
-        curl -X POST http://127.0.0.1:5001/upload_deploy_log \
-          -H "Content-Type: application/json" \
-          -d "$(cat <<EOF_JSON
+        payload=$(cat <<EOF_JSON
 {
   "tag": "githubDeploy",
   "data": {
@@ -48,7 +46,12 @@ jobs:
   }
 }
 EOF_JSON
-)"
+)
+
+        curl -X POST http://127.0.0.1:5001/upload_deploy_log \
+          -H "Content-Type: application/json" \
+          -d "$payload"
+
 
         echo "[DONE] Deployment complete"
         EOF
