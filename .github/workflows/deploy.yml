@@ -1,0 +1,53 @@
+name: 🚀 Deploy Vue Frontend to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup SSH key
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+    - name: Deploy to EC2 via SSH
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@YOUR.EC2.IP.ADDRESS << 'EOF'
+          echo "[START] Deploying Vue app to EC2"
+          cd ~/my-new-vue-project
+          git fetch origin
+          git reset --hard origin/main
+
+          echo "[STEP] Installing dependencies"
+          npm install
+
+          echo "[STEP] Building frontend"
+          echo "[STEP] Post-build steps: favicon + nginx restart"
+          npm run build
+          
+          echo "[STEP] Sending deploy log to Flask server"
+          curl -X POST http://127.0.0.1:5001/upload_deploy_log \
+            -H "Content-Type: application/json" \
+            -d '{
+              "tag": "githubDeploy",
+              "data": {
+                "status": "success",
+                "branch": "main",
+                "source": "GitHub Actions",
+                "message": "Vue app deployed via CI/CD pipeline",
+                "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ')'"
+              }
+            }'
+
+          echo "[DONE] Deployment complete"
+          
+        EOF
+
