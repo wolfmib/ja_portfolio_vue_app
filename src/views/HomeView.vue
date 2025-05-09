@@ -5,12 +5,19 @@
        <div class="head">
          <v-row>
            <v-col cols="5"> 
-             <div style="position: relative" class="mt-16">
-               <h1 class="text-grey">Bonjour,  </h1>
-               <h1 class="text-white">I'M JOHNNY  </h1>
-               <span class="text-grey"></span>Data Scientist & Data Engineer & AI Python Developer & Gaming Actuary & Data Analytics <br />
 
-               <v-btn @click="scroll('contact')" tile dark class="text-yellow mt-8" variant="outlined">Contact me</v-btn>
+<!-- 
+  <h1 class="text-grey">Bonjour,</h1>
+  <h1 class="text-white">I'M JOHNNY</h1>
+  <span class="text-grey"></span>Data Scientist & Data Engineer & AI Python Developer & Gaming Actuary & Data Analytics<br />
+-->
+
+             <div v-if="contextSectionHello.left_block"  style="position: relative" class="mt-16">
+               <h1 class="text-grey">{{ contextSectionHello.left_block.line1 }}</h1>
+               <h1 class="text-white">{{ contextSectionHello.left_block.line2 }}</h1>
+               <span class="text-grey"></span>{{ contextSectionHello.left_block.line3 }} <br />
+
+               <v-btn @click="scroll('contact')" tile dark class="text-yellow mt-8" variant="outlined">{{ contextSectionHello.left_block.contact_button }}</v-btn>
              </div>
            </v-col>
            <v-col cols="2" >
@@ -41,14 +48,14 @@
         </v-col>
         <!-- Text container on the right -->
         <v-col cols="12" md="6">
-          <div id="about" class="text-container">
-<h1>Guten Tag!</h1>
-<p>I am a Data Engineer with over 10 years of experience in <strong class="highlight">Python</strong>, <strong>Golang</strong>, and <strong>Bash scripting</strong>. I specialize in building complex data pipelines and scalable APIs on <strong class="highlight">AWS</strong> and GCP.</p>
+          <div v-if="contextSectionHello.right_block" id="about" class="text-container">
+              <h1>{{ contextSectionHello.right_block.greeting }}</h1>
 
-<p>Currently focused on <strong>AI-driven solutions</strong>, I leverage <strong>Large Language Models (LLMs)</strong> and <strong>FAISS vector stores</strong> to develop advanced AI assistants and automate data workflows.</p>
-
-<p>Skilled in scripting, database management, and scalable AI solutions, I am passionate about delivering impactful, data-driven technologies.</p>
-
+              <p v-for="(para, index) in contextSectionHello.right_block.paragraphs"
+                :key="index"
+                v-html="formattedParagraph(para)">
+              </p>
+      
  <!-- Social media icons or contact buttons can be added here -->
 </div>
         </v-col>
@@ -140,6 +147,7 @@
 </template>
 
 <script>
+// reactive , ref later
 import { defineComponent } from 'vue';
 
 // Components
@@ -154,6 +162,10 @@ import SiteCertificate from '../components/SiteCertificate.vue'
 import ShowCaseCICD from '../components/ShowCaseCICD.vue'
 
 
+
+
+
+
 //import TestTab from '../components/TestTab.vue'
 //import LiveOnMarsComponent from '../components/LiveOnMarsComponent.vue'; // Game Server
 export default defineComponent({
@@ -165,6 +177,7 @@ export default defineComponent({
       iframeLoadError: false,
       isMobile: false,
       iframeLoadTimeout: null,
+      contextSectionHello: {}  // this will hold the dynamic Bonjour section data
     };
   },
 
@@ -183,9 +196,30 @@ export default defineComponent({
   mounted() {
     this.isMobile = this.checkIfMobile(); // Call the function to check if the user is on mobile
     this.setupIframeTimeout(); // Set up a timeout to check iframe load status
+    // 🔥 Fetch Bonjour section data from Flask server
+    fetch('http://localhost:5001/get_section_bonjour_data')
+    .then(res => res.json())
+    .then(data => {
+        if (data.hero_intro) {
+          this.contextSectionHello = data.hero_intro;
+          console.log('✅ Bonjour data loaded:', this.contextSectionHello);
+        } else {
+          console.warn('⚠️ Unexpected data structure:', data);
+        }
+    })
+    .catch(err => {
+        console.error('❌ Failed to load /get_section_bonjour_data:', err);
+    });
+
+
   },
 
   methods: {
+
+    formattedParagraph(para) {
+    return `${para.text}<br><br>`;
+    },
+
     scroll(refName) {
       const element = document.getElementById(refName);
       element.scrollIntoView({ behavior: "smooth" });
@@ -231,19 +265,20 @@ export default defineComponent({
 
 
 
-<style scoped>
-
-
-
-
+<!-- GLOBAL styles (affects v-html and global context) -->
+ <!-- issue: changt he highlight to global so that v-html can loadit correctly  -->
+<style >
 
 .highlight {
     font-weight: bold;  /* Ensures the text is bold */
     color: #ff4500;    /* Change the color to something that stands out, e.g., a bright orange */
 }
 
+</style>
 
 
+<!-- SCOPED styles (only for this component’s markup) -->
+<style scoped>
 
 .text-container {
   padding: 20px;  /* Default padding */
@@ -260,10 +295,6 @@ export default defineComponent({
     padding: 30px; /* Increased padding on larger screens */
   }
 }
-
-
-
-
 
 
 
