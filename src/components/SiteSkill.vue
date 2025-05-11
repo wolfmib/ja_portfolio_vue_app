@@ -1,11 +1,14 @@
 
+<!-- Component: SiteSill.vue -->
 <template>
   <v-container>
     <v-row>
       <!-- First Row of Skills -->
       <v-col cols="12" md="4" v-for="(skill, index) in firstRowSkills" :key="'skill1-' + index">
         <div class="skill-block">
-          <v-icon :class="skill.icon">{{ skill.faIcon }}</v-icon>
+          <!-- <v-icon :class="skill.icon">{{ skill.faIcon }}</v-icon> -->
+          <v-icon>{{ skill.faIcon }}</v-icon>
+
           <h3>{{ skill.title }}</h3>
           <hr class="skill-separator">
           <p>{{ skill.details }}</p>
@@ -16,7 +19,8 @@
       <!-- Second Row of Skills -->
       <v-col cols="12" md="4" v-for="(skill, index) in secondRowSkills" :key="'skill2-' + index">
         <div class="skill-block">
-          <v-icon :class="skill.icon">{{ skill.faIcon }}</v-icon>
+          <!-- <v-icon :class="skill.icon">{{ skill.faIcon }}</v-icon> -->
+          <v-icon>{{ skill.faIcon }}</v-icon>
           <h3>{{ skill.title }}</h3>
           <hr class="skill-separator">
           <p>{{ skill.details }}</p>
@@ -27,6 +31,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+
 export default {
   data() {
     /*
@@ -45,48 +52,26 @@ export default {
     */
 
     return {
-  firstRowSkills: [
-    {
-      title: "Languages",
-      details: "Python, SQL, Golang, Bash, JavaScript, C",
-      faIcon: 'fas fa-code',
-      icon: 'icon-languages'
-    },
-    {
-      title: "Databases",
-      details: "PostgreSQL, MongoDB, MySQL",
-      faIcon: 'fas fa-database',
-      icon: 'icon-databases'
-    },
-    {
-      title: "Data Engineering",
-      details: "Apache Airflow, ETL Pipelines, Superset, BI Dashboards",
-      faIcon: 'fas fa-project-diagram',
-      icon: 'icon-data-engineering'
-    }
-  ],
-  secondRowSkills: [
-    {
-      title: "Cloud & Tools",
-      details: "AWS EC2, S3, Route53, GCP, Git, Linux, VSCode Remote SSH",
-      faIcon: 'fas fa-cloud',
-      icon: 'icon-tools'
-    },
-    {
-      title: "AI & Automation",
-      details: "OpenAI API, Whisper, FastAPI, LangChain, Agents",
-      faIcon: 'fas fa-brain',
-      icon: 'icon-ai-automation'
-    },
-    {
-      title: "Web & Integration",
-      details: "Vue 3, Flask, REST APIs, Google Drive API, JSON Sync",
-      faIcon: 'fas fa-network-wired',
-      icon: 'icon-web-integration'
-    }
-  ]
-};
+        firstRowSkills: [],
+        secondRowSkills: []
+    };
+  },
 
+  mounted() {
+    console.log(' Start section Skills Data loaded:')
+    axios.get('/api/get_section_skills_data')
+      .then((res) => {
+        if (res.data.firstRowSkills && res.data.secondRowSkills) {
+          this.firstRowSkills = res.data.firstRowSkills
+          this.secondRowSkills = res.data.secondRowSkills
+          console.log('✅ Skills section loaded:', res.data)
+        } else {
+          console.warn('⚠️ Unexpected structure:', res.data)
+        }
+      })
+      .catch((err) => {
+        console.error('❌ API fetch failed:', err)
+      })
   }
 };
 </script>
@@ -110,8 +95,15 @@ export default {
   margin: 10px auto; /* Centers the separator and adds space above and below */
 }
 
-.icon-languages, .icon-databases, .icon-data-frameworks, .icon-tools, .icon-web-tech, .icon-design {
-  color: #FFA500; /* Example color */
+/* implement color at may-11-2025 */
+.skill-block .v-icon {
+  color: #FFA500 !important;
+  font-size: 36px;
 }
+
+/*
+.icon-languages, .icon-databases, .icon-data-frameworks, .icon-tools, .icon-web-tech, .icon-design {
+  color: #FFA500; 
+}*/
 </style>
 

@@ -1,3 +1,5 @@
+
+<!--HomeView.vue-->
 <template>
   <v-app id="home">
     <NavBar />
@@ -147,6 +149,9 @@
 </template>
 
 <script>
+// google-server
+import axios from 'axios' // e.g. googld drive api
+
 // reactive , ref later
 import { defineComponent } from 'vue';
 
@@ -194,21 +199,32 @@ export default defineComponent({
   },
 
   mounted() {
-    this.isMobile = this.checkIfMobile(); // Call the function to check if the user is on mobile
-    this.setupIframeTimeout(); // Set up a timeout to check iframe load status
-    // 🔥 Fetch Bonjour section data from Flask server
-    fetch('http://localhost:5001/get_section_bonjour_data')
-    .then(res => res.json())
-    .then(data => {
-        if (data.hero_intro) {
-          this.contextSectionHello = data.hero_intro;
-          console.log('✅ Bonjour data loaded:', this.contextSectionHello);
-        } else {
-          console.warn('⚠️ Unexpected data structure:', data);
-        }
+
+    try {
+      console.log("✅ MOUNTED called");
+      this.isMobile = this.checkIfMobile(); // Call the function to check if the user is on mobile
+      console.log("🚀 Starting  timeout()");
+      this.setupIframeTimeout(); // Set up a timeout to check iframe load status
+      console.log("🚀 ending  timeout()");
+    } catch (e) {
+      console.warn("💥 Error in mounted pre-axios:", e);
+    }
+
+
+
+    // ✅ Fetch Bonjour section from backend via /api/ proxy
+    console.log("🚀 Starting Bonjour fetch");
+    axios.get('/api/get_section_bonjour_data')
+    .then((res) => {
+      if (res.data && res.data.hero_intro) {
+        this.contextSectionHello = res.data.hero_intro;
+        console.log('✅ Bonjour section loaded:', this.contextSectionHello);
+      } else {
+        console.warn('⚠️ Unexpected data structure:', res.data);
+      }
     })
-    .catch(err => {
-        console.error('❌ Failed to load /get_section_bonjour_data:', err);
+    .catch((err) => {
+      console.error('❌ API fetch failed:', err);
     });
 
 
