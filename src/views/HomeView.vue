@@ -122,7 +122,9 @@
       <!-- Portfolio -->
       <v-row>
             <v-col cols="12" >
-              <SectionHeader header-text="Portfolio"/>
+              <!-- may-2025: add Diable Style Header-->
+              <SectionHeader header-text="JA Projects" class="diablo-section-title"/>
+
               <div id="portfolio">
                        <SitePortfolio />
               </div>
@@ -284,6 +286,21 @@ export default defineComponent({
 <!-- GLOBAL styles (affects v-html and global context) -->
  <!-- issue: changt he highlight to global so that v-html can loadit correctly  -->
 <style >
+
+/* Diable Blood Header (Projects) */
+.diablo-section-title h1, 
+.diablo-section-title h2, 
+.diablo-section-title h3 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.5rem;
+  color: #8B0000; /* Diablo Blood Red */
+  text-shadow: 2px 2px 3px #000, 0 0 6px #ff0000;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
 
 .highlight {
     font-weight: bold;  /* Ensures the text is bold */

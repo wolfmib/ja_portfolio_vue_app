@@ -13,7 +13,7 @@
         <v-btn text @click="scroll('home')" class="menu-item text-orange">Home</v-btn>
         <v-btn text @click="scroll('about')" class="menu-item">About</v-btn>
         <v-btn text @click="scroll('skills')" class="menu-item">Skills</v-btn>
-        <v-btn text @click="scroll('portfolio')" class="menu-item">Portfolio</v-btn>
+        <v-btn text @click="scroll('portfolio')" class="menu-item">Projects</v-btn>
         <v-btn text @click="scroll('contact')" class="menu-item">Contact</v-btn>
           <!-- Dummy element to extend the scrollable area -->
         <div class="dummy-element"></div>
