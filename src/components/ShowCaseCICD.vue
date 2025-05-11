@@ -12,38 +12,39 @@
 
 
 
-        <!-- 🔽 Clean & Safe Button Row -->
+        <!-- ✅ FIXED Button Row -->
         <div class="link-row">
-        <v-btn
-            v-if="selectedVideo.url"
-            icon
-            :href="selectedVideo.url"
-            target="_blank"
-            title="Watch on YouTube"
-        >
-            <v-icon>mdi-youtube</v-icon>
-        </v-btn>
-
-        <v-btn
+          <v-btn
             v-if="selectedVideo.github"
             icon
             :href="selectedVideo.github"
             target="_blank"
             title="GitHub Project"
-        >
-            <v-icon>mdi-github</v-icon>
-        </v-btn>
+          >
+            <v-icon icon="fa-brands fa-github" />
+          </v-btn>
 
-        <v-btn
+          <v-btn
             v-if="selectedVideo.linkedin"
             icon
             :href="selectedVideo.linkedin"
             target="_blank"
             title="LinkedIn Article"
-        >
-            <v-icon>mdi-linkedin</v-icon>
-        </v-btn>
+          >
+            <v-icon icon="fa-brands fa-linkedin" />
+          </v-btn>
+
+          <v-btn
+            v-if="selectedVideo.url"
+            icon
+            :href="selectedVideo.url"
+            target="_blank"
+            title="Watch on YouTube"
+          >
+            <v-icon icon="fa-brands fa-youtube" />
+          </v-btn>
         </div>
+
 
   
   <!-- Bottom section: List of videos with clickable items -->
@@ -215,6 +216,10 @@ const selectedVideoEmbedUrl = computed(() => {
 
   
   <style scoped>
+
+
+
+
   .video-container {
     margin-bottom: 20px;
   }
@@ -237,12 +242,36 @@ const selectedVideoEmbedUrl = computed(() => {
     height: 400px;
   }
 
-  .link-row {
+
+
+.link-row {
   margin-top: 12px;
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 32px;
+  margin-bottom: 12px;
 }
+
+.link-row .v-btn {
+  background: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0;
+  min-width: auto;
+}
+
+.link-row .v-btn:hover .v-icon {
+  color: #FFA500 !important; /* Diablo-style orange */
+  text-shadow: 0 0 5px #FFA500;
+}
+
+.link-row .v-icon {
+  font-size: 28px;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+
   
   .v-list-item-title {
     font-weight: bold;
