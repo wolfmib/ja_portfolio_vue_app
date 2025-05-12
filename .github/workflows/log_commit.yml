@@ -39,7 +39,12 @@ jobs:
           "updated_at": "${{ env.TIMESTAMP }}"
         }
         EOF
-        ls -l *.json
+    - name: (Debug) Show generated JSON
+      run: |
+        echo "Showing contents of commit_log/"
+        ls -l commit_log/
+        cat commit_log/*.json
+
 
 
 
