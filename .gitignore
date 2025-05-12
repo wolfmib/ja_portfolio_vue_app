@@ -2,6 +2,10 @@
 ja_push_to_s3_hide.sh
 
 
+# can't push , so give up these method
+google.json
+token.json
+
 
 # Node modules
 node_modules/
