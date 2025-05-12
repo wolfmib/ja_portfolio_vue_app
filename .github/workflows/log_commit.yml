@@ -68,6 +68,9 @@ jobs:
         ls -l commit_log/
         cat commit_log/*.json
 
+    - name: Upload commit JSON(s) to Google Drive
+      run: python3 upload_commit_json.py
+
 
 
 
