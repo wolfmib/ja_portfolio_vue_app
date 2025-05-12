@@ -68,6 +68,11 @@ jobs:
         ls -l commit_log/
         cat commit_log/*.json
 
+    - name: Install Google API libraries
+      run: |
+        pip install --upgrade google-auth google-api-python-client
+
+
     - name: Upload commit JSON(s) to Google Drive
       run: python3 upload_commit_json.py
 
