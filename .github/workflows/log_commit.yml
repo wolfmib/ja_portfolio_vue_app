@@ -4,13 +4,36 @@ on:
   push:
     branches: [ "**" ]  # triggers on every branch
 
+env:
+  ENV_NAME: JA_SECRET_ENV  # (optional, for clarity)
+
 jobs:
   log-commit:
     runs-on: ubuntu-latest
+    environment: JA_SECRET_ENV  # 👈 THIS is configure-env-name:  now required to access the secret
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Decode client_secret.json
+      run: echo "${{ secrets.JA_SECRET_ENV }}" | base64 -d > client_secret.json
+
+    - name: Decode token.json
+      run: echo "${{ secrets.JA_TOKEN_ENV }}" | base64 -d > token.json
+
+    - name: (Debug) Check decoded client_secret.json ## Debug <<
+      run: |
+        echo "🔍 client_secret.json preview:"
+        head -n 5 client_secret.json || echo "❌ Missing or unreadable"
+
+    - name: (Debug) Check decoded token.json       ## Debug <<
+      run: |
+        echo "🔍 token.json preview:"
+        head -n 5 token.json || echo "❌ Missing or unreadable"
+
+
+
 
     - name: Set up Git metadata
       id: vars
