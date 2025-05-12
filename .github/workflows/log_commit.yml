@@ -1,0 +1,45 @@
+name: Log Commit Info to JSON
+
+on:
+  push:
+    branches: [ "**" ]  # triggers on every branch
+
+jobs:
+  log-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Git metadata
+      id: vars
+      run: |
+        echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+        echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+        echo "COMMIT_MESSAGE=$(git log -1 --pretty=format:'%s')" >> $GITHUB_ENV
+        echo "TIMESTAMP=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
+
+    - name: Generate commit JSON with UUID and SHA
+      run: |
+        mkdir -p commit_log
+        UUID=$(uuidgen)
+        COMMIT_SHA=${GITHUB_SHA}
+        echo "UUID=$UUID" >> $GITHUB_ENV
+        echo "COMMIT_SHA=$COMMIT_SHA" >> $GITHUB_ENV
+        FILE_NAME=${{ env.REPO_NAME }}__${{ env.BRANCH_NAME }}__commit__${{ env.TIMESTAMP }}.json
+        cat <<EOF > commit_log/$FILE_NAME
+        {
+          "repo_id": "$UUID",
+          "repo_name": "${{ env.REPO_NAME }}",
+          "current_branch": "${{ env.BRANCH_NAME }}",
+          "commit_sha": "$COMMIT_SHA",
+          "commit_message": "${{ env.COMMIT_MESSAGE }}",
+          "more_note": "",
+          "updated_at": "${{ env.TIMESTAMP }}"
+        }
+        EOF
+        ls -l *.json
+
+
+
